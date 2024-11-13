@@ -1,17 +1,134 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en">
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <title>Gestion des Utilisateurs - Système de Gestion Scolaire</title>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-grad-school.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="assets/css/lightbox.css">
+</head>
+
+<body>
+    <!--header-->
+    <header class="main-header clearfix" role="header">
+        <div class="logo">
+            <a href="#"><em>Gestion</em> Scolaire</a>
+        </div>
+        <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+        <nav id="menu" class="main-nav" role="navigation">
+            <ul class="main-menu">
+                <li><a href="#section1">Accueil</a></li>
+                <li><a href="#section2">Gestion des Utilisateurs</a></li>
+                <li><a href="#section3">Ressources</a></li>
+                <li><a href="#section4">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ***** Main Banner Area Start ***** -->
+    <section class="section main-banner" id="top" data-section="section1">
+        <div class="video-overlay header-text">
+            <div class="caption">
+                <h6>Système de Gestion Scolaire</h6>
+                <h2><em>Bienvenue</em> dans la gestion des utilisateurs</h2>
+                <div class="main-button">
+                    <div class="scroll-to-section"><a href="#section2">Commencer</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Main Banner Area End ***** -->
+
+    <!-- Section pour la gestion des utilisateurs -->
+    <section class="section" data-section="section2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>Gestion des Utilisateurs</h2>
+                    </div>
+                </div>
+
+                <!-- Formulaire pour créer un utilisateur -->
+                <div class="col-md-12">
+                    <h4>Créer un nouvel utilisateur</h4>
+                    <form action="your_backend_script.php" method="POST">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Prénom</label>
+                            <input type="text" class="form-control" id="surname" name="surname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Rôle</label>
+                            <select class="form-control" id="role" name="role" required>
+                                <option value="admin">Administrateur</option>
+                                <option value="teacher">Enseignant</option>
+                                <option value="student">Élève</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer Utilisateur</button>
+                    </form>
+                </div>
+
+                <!-- Liste des utilisateurs -->
+                <div class="col-md-12">
+                    <h4>Liste des utilisateurs</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Exemple de ligne utilisateur -->
+                            <tr>
+                                <td>Jean</td>
+                                <td>Dupont</td>
+                                <td>jean.dupont@email.com</td>
+                                <td>Administrateur</td>
+                            </tr>
+                            <tr>
+                                <td>Marie</td>
+                                <td>Durand</td>
+                                <td>marie.durand@email.com</td>
+                                <td>Enseignant</td>
+                            </tr>
+                            <!-- Ajoutez d'autres utilisateurs ici -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Système de Gestion Scolaire. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
