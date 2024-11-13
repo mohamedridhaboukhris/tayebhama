@@ -24,8 +24,9 @@ class Exam
     private ?\DateTimeInterface $date_remise = null;
 
     #[ORM\Column]
-    private ?int $classe_concernée = null;
+    private ?int $classe_concernee = null;
 
+    
     #[ORM\Column(length: 255)]
     private ?string $professeurs = null;
 
@@ -73,14 +74,14 @@ class Exam
         return $this;
     }
 
-    public function getClasseConcernée(): ?int
+    public function getClasseConcernee(): ?int
     {
-        return $this->classe_concernée;
+        return $this->classe_concernee;
     }
 
-    public function setClasseConcernée(int $classe_concernée): static
+    public function setClasseConcernee(int $classe_concernee): static
     {
-        $this->classe_concernée = $classe_concernée;
+        $this->classe_concernee = $classe_concernee;
 
         return $this;
     }

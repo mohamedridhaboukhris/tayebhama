@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 use App\Entity\Exam;
+use App\Form\ExamType;
 use App\Repository\ExamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
 class ExamController extends AbstractController
@@ -30,4 +32,20 @@ return $this->render('exam/listDB.html.twig',["list"=> $list]);
         $em->remove($exam);
         $em->flush();
         return $this->redirectToRoute("exam_listDB");}
+
+        #[Route('/add', name: 'exam_add')]
+        public function addExamen(ManagerRegistry $manager,Request $req):Response{
+            $exam = new Exam();
+            $em =$manager->getManager();
+         $form = $this->createForm(ExamType::class,$exam);
+         $form->handleRequest($req);
+         if($form->isSubmitted()){
+            
+            $em->persist($exam);
+            $em->flush();
+            return $this->redirectToRoute('app_exam');
+        } 
+            
+            return $this->render('exam/form.html.twig',['f'=>$form]);
+        }    
 }
