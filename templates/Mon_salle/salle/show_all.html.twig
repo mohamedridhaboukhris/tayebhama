@@ -1,7 +1,7 @@
 {% extends 'base1.html.twig' %}
 {% block stylesheets %}
     <style>
-        /* Header Styling */
+    <div class="container-page">
         header {
             background-color: #2e3059;
             color: white;
@@ -17,8 +17,22 @@
             width: 100%;
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(0, 0, 4, 0.4);
-        }
 
+        }
+ html, body {
+    height: 100%; 
+    margin: 0;
+}
+
+.container-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+}
+
+.container {
+    flex: 1; 
+}
         nav {
             display: flex;
             gap: 2rem;

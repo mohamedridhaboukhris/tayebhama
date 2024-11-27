@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+<<<<<<< HEAD
 
 use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,12 +10,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+=======
+use ORM\GeneratedValue;
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SalleRepository;
+>>>>>>> 48a293f03abe082ea5f3c6fd6d8d76079d2cad18
 
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
 class Salle
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
