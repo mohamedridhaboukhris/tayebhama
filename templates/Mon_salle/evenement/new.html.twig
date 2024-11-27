@@ -1,0 +1,39 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Ajouter un Événement{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Ajouter un Événement pour la Salle {{ salle.code }}</h1>
+
+    <!-- Affichage des messages d'erreur -->
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <!-- Affichage des salles disponibles -->
+    {% if availableSalles is defined %}
+        <div class="alert alert-info mt-4">
+            <h5>Salles disponibles :</h5>
+            <ul>
+                {% for salle in availableSalles %}
+                    <li>{{ salle.code }} (Capacité : {{ salle.capacite }}, Bloc : {{ salle.bloc }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Formulaire d'ajout d'événement -->
+    {{ form_start(form) }}
+    <div class="card p-4 shadow-sm mx-auto" style="max-width: 600px;">
+        {{ form_widget(form) }}
+        <div class="d-flex justify-content-between mt-3">
+            <button type="submit" class="btn btn-success">Ajouter</button>
+            <a href="{{ path('salle_evenements', {'id': salle.id}) }}" class="btn btn-secondary">Annuler</a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

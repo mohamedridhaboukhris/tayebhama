@@ -1,0 +1,60 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}
+    {{ title | default('Ajouter une Salle') }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">{{ title | default('Ajouter une Salle') }}</h1>
+
+    {% if message is defined and message %}
+        <!-- Bande alignée avec le tableau -->
+        <div class="alert alert-info text-center mx-auto" style="max-width: 600px;">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <!-- Formulaire Compact dans une Carte -->
+    <div class="card p-4 shadow-sm mx-auto" style="max-width: 600px;">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.code, 'Code de la Salle', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.code, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 101A'}}) }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.capacite, 'Capacité', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.capacite, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 50'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.type, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Salle de conférence'}}) }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form_label(form.bloc, 'Bloc', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.bloc, {'attr': {'class': 'form-control', 'placeholder': 'Ex: A, B, C'}}) }}
+            </div>
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.etage, 'Étage', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.etage, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 1, 2, 3'}}) }}
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Ajouter
+            </button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    <!-- Bouton Retour -->
+    <div class="mt-4 text-center">
+        <a href="{{ path('salle_all') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+</div>
+{% endblock %}

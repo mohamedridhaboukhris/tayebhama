@@ -16,28 +16,22 @@ class SalleRepository extends ServiceEntityRepository
         parent::__construct($registry, Salle::class);
     }
 
-//    /**
-//     * @return Salle[] Returns an array of Salle objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByCriteria(array $criteria): array
+    {
+        $qb = $this->createQueryBuilder('s');
 
-//    public function findOneBySomeField($value): ?Salle
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($criteria['id'])) {
+            $qb->andWhere('s.id = :id')->setParameter('id', $criteria['id']);
+        }
+
+        if (!empty($criteria['bloc'])) {
+            $qb->andWhere('s.bloc = :bloc')->setParameter('bloc', $criteria['bloc']);
+        }
+
+        if (!empty($criteria['capacite'])) {
+            $qb->andWhere('s.capacite >= :capacite')->setParameter('capacite', $criteria['capacite']);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -1,0 +1,32 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Liste des Événements{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Événements pour la Salle {{ salle.code }}</h1>
+
+    {% if evenements|length > 0 %}
+        <ul class="list-group">
+            {% for evenement in evenements %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ evenement.titre }}</strong><br>
+                        {{ evenement.date|date('d/m/Y') }} de {{ evenement.heureDebut|date('H:i') }} à {{ evenement.heureFin|date('H:i') }}
+                    </div>
+                    <div>
+                        <a href="{{ path('evenement_edit', {'id': evenement.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        <form method="post" action="{{ path('evenement_delete', {'id': evenement.id}) }}" style="display:inline;" onsubmit="return confirm('Confirmer la suppression ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id) }}">
+                            <button class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted text-center">Aucun événement pour cette salle.</p>
+    {% endif %}
+    <a href="{{ path('evenement_new', {'id': salle.id}) }}" class="btn btn-success mt-4">Ajouter un Événement</a>
+</div>
+{% endblock %}

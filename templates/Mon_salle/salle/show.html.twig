@@ -1,0 +1,83 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}
+    Détails de la Salle
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Détails de la Salle</h1>
+
+    {% if salle %}
+        <!-- Informations sur la Salle -->
+        <div class="card shadow-sm p-4 mx-auto" style="max-width: 600px;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Code :</strong> {{ salle.code }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Capacité :</strong> {{ salle.capacite }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Type :</strong> {{ salle.type }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Bloc :</strong> {{ salle.bloc }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Étage :</strong> {{ salle.etage }}
+                </li>
+            </ul>
+
+            <!-- Boutons d'Action -->
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ path('salle_edit', {'id': salle.id}) }}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                <form method="post" action="{{ path('salle_delete', {'id': salle.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.id) }}">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Section des Événements -->
+        <h3 class="mt-5">Événements associés</h3>
+        <div class="card shadow-sm p-4">
+            {% if salle.evenements|length > 0 %}
+                <ul class="list-group list-group-flush">
+                    {% for evenement in salle.evenements %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ evenement.titre }}</strong><br>
+                                {{ evenement.date|date('d/m/Y') }} de {{ evenement.heureDebut|date('H:i') }} à {{ evenement.heureFin|date('H:i') }}
+                            </div>
+                            <div>
+                                <a href="{{ path('evenement_edit', {'id': evenement.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                                <form method="post" action="{{ path('evenement_delete', {'id': evenement.id}) }}" style="display: inline;" onsubmit="return confirm('Supprimer cet événement ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id) }}">
+                                    <button class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Aucun événement associé à cette salle.</p>
+            {% endif %}
+            <a href="{{ path('evenement_new', {'id': salle.id}) }}" class="btn btn-success mt-3">Ajouter un événement</a>
+        </div>
+    {% else %}
+        <p class="text-center text-danger">La salle demandée n'existe pas.</p>
+    {% endif %}
+
+    <!-- Bouton Retour -->
+    <div class="mt-4 text-center">
+        <a href="{{ path('salle_all') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+</div>
+{% endblock %}

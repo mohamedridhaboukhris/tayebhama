@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des Recherches{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Historique des Recherches</h1>
+
+    {% if historique is not empty %}
+        <ul class="list-group">
+            {% for item in historique %}
+                <li class="list-group-item">
+                    Recherche : 
+                    <strong>ID :</strong> {{ item.id|default('N/A') }},
+                    <strong>Bloc :</strong> {{ item.bloc|default('N/A') }},
+                    <strong>Capacité :</strong> {{ item.capacite|default('N/A') }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-center">Aucune recherche enregistrée.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{{ path('salle_search') }}" class="btn btn-primary">Retour à la recherche</a>
+    </div>
+</div>
+{% endblock %}
