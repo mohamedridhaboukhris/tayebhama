@@ -33,7 +33,10 @@
         "symfony/property-info": "6.4.*",
         "symfony/runtime": "6.4.*",
         "symfony/security-bundle": "6.4.*",
+<<<<<<< HEAD
         "symfony/security-csrf": "6.4.*",
+=======
+>>>>>>> origin/travailtayeb
         "symfony/serializer": "6.4.*",
         "symfony/stimulus-bundle": "^2.21",
         "symfony/string": "6.4.*",

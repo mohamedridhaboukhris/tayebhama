@@ -1,0 +1,70 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Course Details{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-primary fw-bold">Course Details</h1>
+                <p class="text-muted">View detailed information about the course below.</p>
+            </div>
+        </div>
+
+        <!-- Course Details Card -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Course Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th class="w-50">ID</th>
+                                <td>{{ cour.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Course Name</th>
+                                <td>{{ cour.nomCours }}</td>
+                            </tr>
+                            <tr>
+                                <th>Enseignant Responsable</th>
+                                <td>{{ cour.enseignantResponsable }}</td>
+                            </tr>
+                            <tr>
+                                <th>Class Concerned</th>
+                                <td>{{ cour.classConcernee }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ cour.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Created</th>
+                                <td>{{ cour.dateCreation ? cour.dateCreation|date('d M Y, H:i') : 'N/A' }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ path('app_cours_index') }}" class="btn btn-outline-secondary">
+                            <i class="fa fa-arrow-left"></i> Back to List
+                        </a>
+                        <div>
+                            <a href="{{ path('app_cours_edit', {'id': cour.id}) }}" class="btn btn-outline-info me-2">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <form method="post" action="{{ path('app_cours_delete', {'id': cour.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cour.id) }}">
+                                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

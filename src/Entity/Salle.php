@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,11 +16,16 @@ use ORM\GeneratedValue;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SalleRepository;
 >>>>>>> 48a293f03abe082ea5f3c6fd6d8d76079d2cad18
+=======
+use App\Repository\SalleRepository;
+use Doctrine\ORM\Mapping as ORM;
+>>>>>>> origin/travailtayeb
 
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
 class Salle
 {
     #[ORM\Id]
+<<<<<<< HEAD
     #[GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
@@ -49,11 +55,30 @@ class Salle
         $this->evenements = new ArrayCollection();
     }
 
+=======
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 10, unique: true)]
+    private ?string $code = null;
+
+    #[ORM\Column(type: "integer")]
+    private ?int $capacite = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $type = null;
+
+>>>>>>> origin/travailtayeb
     public function getId(): ?int
     {
         return $this->id;
     }
 
+<<<<<<< HEAD
+=======
+    // Getter et Setter pour le code
+>>>>>>> origin/travailtayeb
     public function getCode(): ?string
     {
         return $this->code;
@@ -62,10 +87,17 @@ class Salle
     public function setCode(string $code): self
     {
         $this->code = $code;
+<<<<<<< HEAD
 
         return $this;
     }
 
+=======
+        return $this;
+    }
+
+    // Getter et Setter pour la capacité
+>>>>>>> origin/travailtayeb
     public function getCapacite(): ?int
     {
         return $this->capacite;
@@ -74,10 +106,17 @@ class Salle
     public function setCapacite(int $capacite): self
     {
         $this->capacite = $capacite;
+<<<<<<< HEAD
 
         return $this;
     }
 
+=======
+        return $this;
+    }
+
+    // Getter et Setter pour le type
+>>>>>>> origin/travailtayeb
     public function getType(): ?string
     {
         return $this->type;
@@ -86,6 +125,7 @@ class Salle
     public function setType(string $type): self
     {
         $this->type = $type;
+<<<<<<< HEAD
 
         return $this;
     }
@@ -138,6 +178,8 @@ class Salle
             }
         }
 
+=======
+>>>>>>> origin/travailtayeb
         return $this;
     }
 }

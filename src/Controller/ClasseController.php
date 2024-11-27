@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+<<<<<<< HEAD
 use App\Entity\Classe;
 use App\Entity\Etudiant;
 use App\Form\ClasseType;
@@ -157,6 +158,19 @@ public function classeDetail(Classe $classe): Response
     {
         return $this->render('classe/details.html.twig', [
             'etudiant' => $etudiant,
+=======
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+class ClasseController extends AbstractController
+{
+    #[Route('/classe', name: 'app_classe')]
+    public function index(): Response
+    {
+        return $this->render('classe/index.html.twig', [
+            'controller_name' => 'ClasseController',
+>>>>>>> origin/travailtayeb
         ]);
     }
 }

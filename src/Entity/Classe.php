@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+<<<<<<< HEAD
 use App\Repository\ClasseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,10 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClasseRepository::class)]
+=======
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
+>>>>>>> origin/travailtayeb
 class Classe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+<<<<<<< HEAD
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
@@ -60,12 +67,20 @@ class Classe
 private ?string $status = 'cours'; // Valeur par défaut : "cours"
 
     // Getters and Setters
+=======
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+>>>>>>> origin/travailtayeb
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+<<<<<<< HEAD
     public function getNom(): ?string
     {
         return $this->nom;
@@ -164,4 +179,16 @@ public function setStatus(string $status): self
 }
 
 
+=======
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+>>>>>>> origin/travailtayeb
 }

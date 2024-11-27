@@ -1,0 +1,78 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Chapitre List{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-primary fw-bold">Chapitres</h1>
+                <p class="text-muted">Manage all chapters in the list below.</p>
+            </div>
+        </div>
+
+        <!-- Add New Button -->
+        <div class="row mb-4">
+            <div class="col-12 text-end">
+                <a href="{{ path('app_chapitre_new') }}" class="btn btn-success">
+                    <i class="fa fa-plus me-1"></i> Add New Chapitre
+                </a>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle">
+                                <thead class="bg-primary text-white">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Titre</th>
+                                    <th>Contenu</th>
+                                    <th>Ordre</th>
+                                    <th>Date Création</th>
+                                    <th>Cours</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for chapitre in chapitres %}
+                                    <tr>
+                                        <td>{{ chapitre.id }}</td>
+                                        <td>{{ chapitre.titre }}</td>
+                                        <td>
+                                            {{ chapitre.contenu|length > 50 ? chapitre.contenu|slice(0, 50) ~ '...' : chapitre.contenu }}
+                                        </td>
+                                        <td>{{ chapitre.ordre }}</td>
+                                        <td>{{ chapitre.dateCreation ? chapitre.dateCreation|date('d M Y, H:i') : 'N/A' }}</td>
+                                        <td>{{ chapitre.cours.nomCours }}</td>
+                                        <td>
+                                            <a href="{{ path('app_chapitre_show', {'id': chapitre.id}) }}" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-eye"></i> View
+                                            </a>
+                                            <a href="{{ path('app_chapitre_edit', {'id': chapitre.id}) }}" class="btn btn-warning btn-sm">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                            <a href="{{ path('app_chapitre_delete', {'id': chapitre.id}) }}" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-edit"></i> delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">No records found.</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

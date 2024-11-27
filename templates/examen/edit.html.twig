@@ -1,0 +1,67 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Edit Examen{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-primary fw-bold">Edit Examen</h1>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                {{ form_label(form.name, 'Exam Name', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.name) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_label(form.date, 'Date', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.date) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_label(form.duration, 'Duration (minutes)', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.duration, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.duration) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_label(form.location, 'Location', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.location, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.location) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.type) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_label(form.professeurDeGarde, 'Professor on Duty', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.professeurDeGarde, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.professeurDeGarde) }}
+                            </div>
+                            <div class="col-md-12">
+                                {{ form_label(form.classes, 'Classes Concerned', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.classes, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}
+                                {{ form_errors(form.classes) }}
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex justify-content-between">
+                            <a href="{{ path('app_examen_index') }}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary"> Update</button>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+<<<<<<< HEAD
 use App\Entity\Specialite;
 use App\Form\SpecialiteType;
 use App\Repository\SpecialiteRepository;
@@ -80,4 +81,19 @@ class SpecialiteController extends AbstractController
 
         return $this->render('specialite/form.html.twig', ['f' => $form]);
     }
+=======
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+class SpecialiteController extends AbstractController
+{
+    #[Route('/specialite', name: 'app_specialite')]
+    public function index(): Response
+    {
+        return $this->render('specialite/index.html.twig', [
+            'controller_name' => 'SpecialiteController',
+        ]);
+    }
+>>>>>>> origin/travailtayeb
 }

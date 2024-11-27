@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Salles{% endblock %}
+
+{% block body %}
+    <h1>Liste des Salles</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Capacité</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for salle in salles %}
+                <tr>
+                    <td>{{ salle.code }}</td>
+                    <td>{{ salle.capacite }}</td>
+                    <td>{{ salle.type }}</td>
+                    <td>
+                        <a href="{{ path('salle_show', {'id': salle.id}) }}">Voir</a>
+                        <a href="{{ path('salle_edit', {'id': salle.id}) }}">Modifier</a>
+                        <form method="post" action="{{ path('salle_delete', {'id': salle.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.id) }}">
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune salle trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('salle_new') }}" class="btn btn-primary">Créer une nouvelle salle</a>
+{% endblock %}
