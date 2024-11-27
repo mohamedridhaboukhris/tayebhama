@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\SalleRepository;
+use ORM\GeneratedValue;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SalleRepository;
 
 #[ORM\Entity(repositoryClass: SalleRepository::class)]
 class Salle
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
