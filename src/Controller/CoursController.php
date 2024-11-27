@@ -127,5 +127,5 @@ use Symfony\Component\Routing\Attribute\Route;
 
         return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
     }
->>>>>>> origin/travailtayeb
+
 }

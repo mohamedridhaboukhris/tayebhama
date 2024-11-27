@@ -222,7 +222,6 @@ class SalleController extends AbstractController
     {
         return $this->render('Mon_salle/evenement/list.html.twig', [
             'evenements' => $salle->getEvenements(),
-=======
 
             return $this->redirectToRoute('salle_index');
         }
