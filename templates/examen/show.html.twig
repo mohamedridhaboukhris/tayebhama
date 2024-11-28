@@ -1,0 +1,88 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Examen Details{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-primary fw-bold">Examen Details</h1>
+                <p class="text-muted">View all details about this exam below.</p>
+            </div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Examen Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th class="w-50">ID</th>
+                                <td>{{ examan.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ examan.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td>{{ examan.date ? examan.date|date('d M Y, H:i') : 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Duration (minutes)</th>
+                                <td>{{ examan.duration }}</td>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <td>{{ examan.location }}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{ examan.type }}</td>
+                            </tr>
+                            <tr>
+                                <th>Professor on Duty</th>
+                                <td>{{ examan.professeurDeGarde.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Classes</th>
+                                <td>
+                                    {% if examan.classes is not empty %}
+                                        <ul class="mb-0">
+                                            {% for classe in examan.classes %}
+                                                <li>{{ classe.name }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <p>No classes assigned.</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ path('app_examen_index') }}" class="btn btn-outline-secondary">
+                            <i class="fa fa-arrow-left"></i> Back to List
+                        </a>
+                        <div>
+                            <a href="{{ path('app_examen_edit', {'id': examan.id}) }}" class="btn btn-dangeer me-2">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <form method="post" action="{{ path('app_examen_delete', {'id': examan.id}) }}" >
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ examan.id) }}">
+                                <button class="btn btn-warning btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Edit Course{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <!-- Breadcrumb -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-light p-3 rounded shadow-sm">
+                        <li class="breadcrumb-item"><a href="">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('app_cours_index') }}">Courses</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Course</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-primary fw-bold">Edit Course</h1>
+                <p class="text-muted">Make changes to the course details below.</p>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        <div class="row g-3">
+                            <!-- Course Name -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.nomCours, 'Course Name', {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.nomCours, {'attr': {'class': 'form-control', 'placeholder': 'Enter course name'}}) }}
+                                    {{ form_errors(form.nomCours) }}
+                                </div>
+                            </div>
+
+                            <!-- Enseignant Responsable -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.enseignantResponsable, 'Enseignant Responsable', {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.enseignantResponsable, {'attr': {'class': 'form-control', 'placeholder': 'Enter teacher name'}}) }}
+                                    {{ form_errors(form.enseignantResponsable) }}
+                                </div>
+                            </div>
+
+                            <!-- Class Concerned -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.classConcernee, 'Class Concerned', {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.classConcernee, {'attr': {'class': 'form-control', 'placeholder': 'Enter class level or group'}}) }}
+                                    {{ form_errors(form.classConcernee) }}
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Enter course details', 'rows': 5}}) }}
+                                    {{ form_errors(form.description) }}
+                                </div>
+                            </div>
+
+                            <!-- Date Creation -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ form_label(form.dateCreation, 'Date Creation', {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.dateCreation, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.dateCreation) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                            <a href="{{ path('app_cours_index') }}" class="btn btn-outline-secondary px-4">Cancel</a>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
