@@ -1,237 +1,77 @@
-{% extends 'base1.html.twig' %}
-{% block stylesheets %}
-    <style>
-    <div class="container-page">
-        header {
-            background-color: #2e3059;
-            color: white;
-            padding: 1.2rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 2rem;
-            padding-right: 2rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0, 0, 4, 0.4);
+{% extends 'base_dash.html.twig' %}
 
-        }
- html, body {
-    height: 100%; 
-    margin: 0;
-}
+{% block title %}Salles Details{% endblock %}
 
-.container-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; 
-}
+{% block content %}
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-primary fw-bold">Salles Details</h1>
+                <p class="text-muted">View all available rooms below.</p>
+            </div>
+        </div>
 
-.container {
-    flex: 1; 
-}
-        nav {
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #fca311;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .logo span {
-            font-size: 120%;
-            color: #f7f5f2;
-        }
-
-        .logo span1 {
-            font-size: 120%;
-            color: #fca311;
-        }
-
-        /* Table and Layout Styling */
-        .table-responsive {
-            display: flex;
-            justify-content: center;
-            margin-top: 120px; /* To prevent overlap with the fixed header */
-        }
-
-        .table {
-            width: 90%;
-            border-collapse: collapse;
-            font-size: 1rem;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .table th {
-            background: #0E3386;
-            color: white;
-            padding: 15px;
-            text-transform: uppercase;
-            font-weight: 600;
-            border: none;
-        }
-
-        .table td {
-            padding: 12px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table tbody tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-
-        .table tbody tr:hover {
-            background: #e2e6ea;
-            transform: scale(1.01);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .table th, .table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .btn {
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            display: inline-block;
-            text-decoration: none;
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, #6c63ff, #007bff);
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-info:hover {
-            background: linear-gradient(135deg, #007bff, #6c63ff);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #ffb700, #ffae42);
-            color: black;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-warning:hover {
-            background: linear-gradient(135deg, #ffae42, #ffb700);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545, #c82333);
-            color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #c82333, #dc3545);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #28a745, #218838);
-            color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #218838, #28a745);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Button Layout */
-        .table .d-flex {
-            justify-content: center;
-            gap: 5px;
-        }
-    </style>
-{% endblock %}
-
-{% block body %}
-
-
-<div class="d-flex justify-content-end mt-5">
-    <a href="{{ path('salle_new') }}" class="btn btn-success">
-        <i class="fas fa-plus"></i> Ajouter une Salle
-    </a>
-</div>
-
-
-<div class="table-responsive">
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Code</th>
-                <th>Capacité</th>
-                <th>Type</th>
-                <th>Bloc</th>
-                <th>Étage</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for salle in salles %}
-                <tr>
-                    <td>{{ salle.code }}</td>
-                    <td>{{ salle.capacite }}</td>
-                    <td>{{ salle.type }}</td>
-                    <td>{{ salle.bloc }}</td>
-                    <td>{{ salle.etage }}</td>
-                    <td class="d-flex">
-                        <a href="{{ path('salle_show', {'id': salle.id}) }}" class="btn btn-info btn-sm">
-                            Voir
+        <!-- Details Table -->
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Salles Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Capacité</th>
+                                    <th>Type</th>
+                                    <th>Bloc</th>
+                                    <th>Étage</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for salle in salles %}
+                                    <tr>
+                                        <td>{{ salle.code }}</td>
+                                        <td>{{ salle.capacite }}</td>
+                                        <td>{{ salle.type }}</td>
+                                        <td>{{ salle.bloc }}</td>
+                                        <td>{{ salle.etage }}</td>
+                                        <td class="text-center">
+                                            <a href="{{ path('salle_show', {'id': salle.id}) }}" class="btn btn-outline-info btn-sm mb-1">
+                                                <i class="fa fa-eye"></i> Voir
+                                            </a>
+                                            <a href="{{ path('salle_edit', {'id': salle.id}) }}" class="btn btn-outline-warning btn-sm mb-1">
+                                                <i class="fa fa-edit"></i> Modifier
+                                            </a>
+                                            <form method="post" action="{{ path('salle_delete', {'id': salle.id}) }}" class="d-inline">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.id) }}">
+                                                <button class="btn btn-outline-danger btn-sm mb-1">
+                                                    <i class="fa fa-trash"></i> Supprimer
+                                                </button>
+                                            </form>
+                                            <a href="{{ path('salle_evenements', {'id': salle.id}) }}" class="btn btn-outline-secondary btn-sm">
+                                                <i class="fa fa-calendar"></i> Gérer les événements
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">Aucune salle trouvée.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-end">
+                        <a href="{{ path('salle_new') }}" class="btn btn-primary">
+                            <i class="fa fa-plus"></i> Ajouter une Salle
                         </a>
-                        <a href="{{ path('salle_edit', {'id': salle.id}) }}" class="btn btn-warning btn-sm">
-                            Modifier
-                        </a>
-                        <form method="post" action="{{ path('salle_delete', {'id': salle.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.id) }}">
-                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                        </form>
-                        <a href="{{ path('salle_evenements', {'id': salle.id}) }}" class="btn btn-secondary btn-sm">Gérer les événements</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6" class="text-center">Aucune salle trouvée.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,152 +1,54 @@
-{% block stylesheets %}
-<style>
-    body {
-        margin-top: 20px;
-        background: #ddd;
-        background-image: url('https://www.esb.tn/wp-content/uploads/2022/10/ESB-1024x683.jpg');
-        background-size: cover;  
-        background-position: center center; 
-        background-attachment: fixed;  
-    }
+{% extends 'base_dash.html.twig' %}
 
-    .form-container {
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 30px 40px;
-        background: rgba(255, 255, 255, 0.8); 
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+{% block title %}Ajouter une Classe{% endblock %}
 
-    .form-container h2 {
-        text-align: center;
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 20px;
-        color: #333;
-    }
+{% block content %}
+<div class="container my-5">
+    <div class="form-container">
+        <h2 class="text-center">Ajouter une Classe</h2>
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.nom, 'Nom de la Classe', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Classe A'}}) }}
+                {{ form_errors(form.nom) }}
+            </div>
 
-    .input-group {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 1.5rem;
-    }
+            <div class="mb-3">
+                {{ form_label(form.niveau, 'Niveau', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.niveau, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 6e'}}) }}
+                {{ form_errors(form.niveau) }}
+            </div>
 
-    .input-group label {
-        font-weight: 500;
-        margin-bottom: 5px;
-        color: #555;
-    }
+            <div class="mb-3">
+                {{ form_label(form.annee, 'Année', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.annee, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.annee) }}
+            </div>
 
-    .input-group input,
-    .input-group select {
-        padding: 10px 15px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background: #fff;
-        color: #333;
-        transition: border-color 0.3s ease;
-    }
+            <div class="mb-3">
+                {{ form_label(form.specialite, 'Spécialité', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.specialite, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.specialite) }}
+            </div>
 
-    .input-group input:focus,
-    .input-group select:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-        outline: none;
-    }
+            <div class="mb-3">
+                {{ form_label(form.nombreEtudiants, 'Nombre d\'Étudiants', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.nombreEtudiants, {
+                    'attr': {
+                        'class': 'form-control',
+                        'min': 25,
+                        'max': 32,
+                        'placeholder': 'Entre 25 et 32'
+                    }
+                }) }}
+                {{ form_errors(form.nombreEtudiants) }}
+            </div>
 
-    .btn-group {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    .btn-submit, .btn-cancel {
-        flex: 1;
-        padding: 10px 15px;
-        font-size: 1rem;
-        font-weight: 600;
-        border: none;
-        border-radius: 30px;
-        text-transform: uppercase;
-        transition: all 0.3s ease-in-out;
-        text-align: center;
-        cursor: pointer;
-    }
-
-    .btn-submit {
-        background: linear-gradient(135deg, #6c63ff, #007bff);
-        color: white;
-    }
-
-    .btn-submit:hover {
-        background: linear-gradient(135deg, #007bff, #6c63ff);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        transform: translateY(-2px);
-    }
-
-    .btn-cancel {
-        background: linear-gradient(135deg, #e57373, #e53935);
-        color: white;
-    }
-
-    .btn-cancel:hover {
-        background: linear-gradient(135deg, #e53935, #e57373);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        transform: translateY(-2px);
-    }
-</style>
-{% endblock %}
-
-{% block body %}
-<div class="form-container">
-
-    <h2>Ajouter une Classe</h2>
-    {{ form_start(form) }}
-        <div class="input-group">
-            {{ form_label(form.nom, 'Nom de la Classe') }}
-            {{ form_widget(form.nom, {'attr': {'placeholder': 'Ex: Classe A'}}) }}
-            {{ form_errors(form.nom) }}
-        </div>
-
-        <div class="input-group">
-            {{ form_label(form.niveau, 'Niveau') }}
-            {{ form_widget(form.niveau, {'attr': {'placeholder': 'Ex: 6e'}}) }}
-            {{ form_errors(form.niveau) }}
-        </div>
-
-        <div class="input-group">
-            {{ form_label(form.annee, 'Année') }}
-            {{ form_widget(form.annee) }}
-            {{ form_errors(form.annee) }}
-        </div>
-
-        <div class="input-group">
-            {{ form_label(form.specialite, 'Spécialité') }}
-            {{ form_widget(form.specialite) }}
-            {{ form_errors(form.specialite) }}
-        </div>
-        
-
-        <div class="input-group">
-            {{ form_label(form.nombreEtudiants, 'Nombre d\'Étudiants') }}
-            {{ form_widget(form.nombreEtudiants, {
-                'attr': {
-                    'class': 'form-control',
-                    'min': 25,
-                    'max': 32,
-                    'placeholder': 'Entre 25 et 32'
-                }
-            }) }}
-            {{ form_errors(form.nombreEtudiants) }}
-        </div>
-
-        <div class="btn-group">
-            <button type="submit" class="btn-submit">Ajouter Classe</button>
-            <a href="{{ path('classe_list') }}" class="btn-cancel">Annuler</a>
-        </div>
-    {{ form_end(form) }}
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary px-4">Ajouter Classe</button>
+                <a href="{{ path('classe_list') }}" class="btn btn-danger px-4">Annuler</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}

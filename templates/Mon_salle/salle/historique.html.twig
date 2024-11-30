@@ -1,28 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_dash.html.twig' %}
 
 {% block title %}Historique des Recherches{% endblock %}
 
-{% block body %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Historique des Recherches</h1>
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="text-primary fw-bold">Historique des Recherches</h1>
+            <p class="text-muted">Consultez vos recherches précédentes ci-dessous.</p>
+        </div>
+    </div>
 
-    {% if historique is not empty %}
-        <ul class="list-group">
-            {% for item in historique %}
-                <li class="list-group-item">
-                    Recherche : 
-                    <strong>ID :</strong> {{ item.id|default('N/A') }},
-                    <strong>Bloc :</strong> {{ item.bloc|default('N/A') }},
-                    <strong>Capacité :</strong> {{ item.capacite|default('N/A') }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p class="text-center">Aucune recherche enregistrée.</p>
-    {% endif %}
-
-    <div class="text-center mt-4">
-        <a href="{{ path('salle_search') }}" class="btn btn-primary">Retour à la recherche</a>
+    <!-- Historique List -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if historique is not empty %}
+                        <ul class="list-group">
+                            {% for item in historique %}
+                                <li class="list-group-item">
+                                    <strong>ID :</strong> {{ item.id|default('N/A') }},
+                                    <strong>Bloc :</strong> {{ item.bloc|default('N/A') }},
+                                    <strong>Capacité :</strong> {{ item.capacite|default('N/A') }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-center text-muted">Aucune recherche enregistrée.</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{{ path('salle_search') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i> Retour à la recherche
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

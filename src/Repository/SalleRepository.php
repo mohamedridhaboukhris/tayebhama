@@ -16,7 +16,6 @@ class SalleRepository extends ServiceEntityRepository
         parent::__construct($registry, Salle::class);
     }
 
-<<<<<<< HEAD
     public function findByCriteria(array $criteria): array
     {
         $qb = $this->createQueryBuilder('s');
@@ -35,7 +34,7 @@ class SalleRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-=======
+
 //    /**
 //     * @return Salle[] Returns an array of Salle objects
 //     */
@@ -60,5 +59,4 @@ class SalleRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
->>>>>>> origin/travailtayeb
 }

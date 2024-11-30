@@ -1,32 +1,53 @@
-{% extends 'base1.html.twig' %}
+{% extends 'base_dash.html.twig' %}
 
-{% block title %}Liste des Événements{% endblock %}
+{% block title %}Événements pour la Salle {{ salle.code }}{% endblock %}
 
-{% block body %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Événements pour la Salle {{ salle.code }}</h1>
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="text-primary fw-bold">Événements pour la Salle {{ salle.code }}</h1>
+            <p class="text-muted">Liste des événements associés à cette salle.</p>
+        </div>
+    </div>
 
-    {% if evenements|length > 0 %}
-        <ul class="list-group">
-            {% for evenement in evenements %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>{{ evenement.titre }}</strong><br>
-                        {{ evenement.date|date('d/m/Y') }} de {{ evenement.heureDebut|date('H:i') }} à {{ evenement.heureFin|date('H:i') }}
-                    </div>
-                    <div>
-                        <a href="{{ path('evenement_edit', {'id': evenement.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form method="post" action="{{ path('evenement_delete', {'id': evenement.id}) }}" style="display:inline;" onsubmit="return confirm('Confirmer la suppression ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id) }}">
-                            <button class="btn btn-sm btn-danger">Supprimer</button>
-                        </form>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p class="text-muted text-center">Aucun événement pour cette salle.</p>
-    {% endif %}
-    <a href="{{ path('evenement_new', {'id': salle.id}) }}" class="btn btn-success mt-4">Ajouter un Événement</a>
+    <!-- Events List -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if evenements|length > 0 %}
+                        <ul class="list-group">
+                            {% for evenement in evenements %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ evenement.titre }}</strong><br>
+                                        {{ evenement.date|date('d/m/Y') }} de {{ evenement.heureDebut|date('H:i') }} à {{ evenement.heureFin|date('H:i') }}
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ path('evenement_edit', {'id': evenement.id}) }}" class="btn btn-warning btn-sm">
+                                            Modifier
+                                        </a>
+                                        <form method="post" action="{{ path('evenement_delete', {'id': evenement.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id) }}">
+                                            <button class="btn btn-danger btn-sm">Supprimer</button>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted text-center mt-4">Aucun événement pour cette salle.</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{{ path('evenement_new', {'id': salle.id}) }}" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Ajouter un Événement
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

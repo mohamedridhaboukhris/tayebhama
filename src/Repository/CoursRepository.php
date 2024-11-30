@@ -16,7 +16,7 @@ class CoursRepository extends ServiceEntityRepository
         parent::__construct($registry, Cours::class);
     }
 
-<<<<<<< HEAD
+
     //    /**
     //     * @return Cours[] Returns an array of Cours objects
     //     */
@@ -41,7 +41,7 @@ class CoursRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-=======
+
 //    /**
 //     * @return Cours[] Returns an array of Cours objects
 //     */
@@ -66,5 +66,5 @@ class CoursRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
->>>>>>> origin/travailtayeb
+
 }

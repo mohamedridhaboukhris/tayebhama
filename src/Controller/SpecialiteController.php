@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-<<<<<<< HEAD
 use App\Entity\Specialite;
 use App\Form\SpecialiteType;
 use App\Repository\SpecialiteRepository;
@@ -19,7 +18,7 @@ class SpecialiteController extends AbstractController
     public function specialiteList(SpecialiteRepository $repo): Response
     {
         return $this->render('specialite/list.html.twig', [
-            'list' => $repo->findAll()
+            'list' => $repo->findAll(),
         ]);
     }
 
@@ -27,7 +26,7 @@ class SpecialiteController extends AbstractController
     public function specialiteDetails(Specialite $specialite): Response
     {
         return $this->render('specialite/details.html.twig', [
-            'specialite' => $specialite
+            'specialite' => $specialite,
         ]);
     }
 
@@ -35,65 +34,62 @@ class SpecialiteController extends AbstractController
     public function specialiteDelete($id, ManagerRegistry $manager): Response
     {
         $specialite = $manager->getRepository(Specialite::class)->find($id);
+
         if (!$specialite) {
-            throw $this->createNotFoundException("Specialite with ID $id not found.");
+            throw $this->createNotFoundException("Spécialité avec l'ID $id non trouvée.");
         }
 
         $em = $manager->getManager();
         $em->remove($specialite);
         $em->flush();
 
-        $this->addFlash('success', 'Specialite removed successfully');
+        $this->addFlash('success', 'Spécialité supprimée avec succès.');
         return $this->redirectToRoute('specialite_list');
     }
-
+/*
     #[Route('/add', name: 'specialite_add')]
     public function specialiteAdd(Request $request, ManagerRegistry $manager): Response
     {
-        $em = $manager->getManager();
         $specialite = new Specialite();
-        
         $form = $this->createForm(SpecialiteType::class, $specialite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $manager->getManager();
             $em->persist($specialite);
             $em->flush();
+
+            $this->addFlash('success', 'Spécialité ajoutée avec succès.');
             return $this->redirectToRoute('specialite_list');
         }
 
-        return $this->render('specialite/form.html.twig', ['f' => $form]);
+        return $this->render('specialite/form.html.twig', ['f' => $form->createView()]);
     }
 
-    #[Route('/update/{id}', name: 'specialite_update')]
+   /* #[Route('/update/{id}', name: 'specialite_update')]
     public function specialiteUpdate(Request $request, ManagerRegistry $manager, Specialite $specialite): Response
     {
-        $em = $manager->getManager();
-        
         $form = $this->createForm(SpecialiteType::class, $specialite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $manager->getManager();
             $em->persist($specialite);
             $em->flush();
+
+            $this->addFlash('success', 'Spécialité mise à jour avec succès.');
             return $this->redirectToRoute('specialite_list');
         }
 
-        return $this->render('specialite/form.html.twig', ['f' => $form]);
+        return $this->render('specialite/form.html.twig', ['f' => $form->createView()]);
     }
-=======
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
-class SpecialiteController extends AbstractController
-{
-    #[Route('/specialite', name: 'app_specialite')]
+    #[Route('/', name: 'app_specialite')]
     public function index(): Response
     {
         return $this->render('specialite/index.html.twig', [
             'controller_name' => 'SpecialiteController',
         ]);
     }
->>>>>>> origin/travailtayeb
+        */
 }

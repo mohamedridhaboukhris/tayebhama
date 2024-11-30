@@ -1,21 +1,26 @@
-{% extends 'base1.html.twig' %}
+{% extends 'base_dash.html.twig' %}
 
 {% block title %}
     {{ title | default('Ajouter une Salle') }}
 {% endblock %}
 
-{% block body %}
-<div class="container mt-5">
-    <h1 class="mb-4 text-center">{{ title | default('Ajouter une Salle') }}</h1>
+{% block content %}
+<div class="container my-5">
+    <!-- Titre de la page -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="text-primary fw-bold">{{ title | default('Ajouter une Salle') }}</h1>
+        </div>
+    </div>
 
     {% if message is defined and message %}
-        <!-- Bande alignée avec le tableau -->
+        <!-- Message informatif -->
         <div class="alert alert-info text-center mx-auto" style="max-width: 600px;">
             {{ message }}
         </div>
     {% endif %}
 
-    <!-- Formulaire Compact dans une Carte -->
+    <!-- Formulaire d'ajout -->
     <div class="card p-4 shadow-sm mx-auto" style="max-width: 600px;">
         {{ form_start(form) }}
         <div class="row">
@@ -50,9 +55,9 @@
         {{ form_end(form) }}
     </div>
 
-    <!-- Bouton Retour -->
+    <!-- Bouton de retour -->
     <div class="mt-4 text-center">
-        <a href="{{ path('salle_all') }}" class="btn btn-secondary">
+        <a href="{{ path('salle_all') }}" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left"></i> Retour à la liste
         </a>
     </div>

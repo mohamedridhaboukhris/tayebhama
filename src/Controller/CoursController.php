@@ -5,65 +5,17 @@ namespace App\Controller;
 use App\Entity\Cours;
 use App\Form\CoursType;
 use App\Repository\CoursRepository;
-<<<<<<< HEAD
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry;
-
-class CoursController extends AbstractController
-{
-    #[Route('/cours', name: 'app_cours')]
-    public function index(): Response
-    {
-        return $this->render('cours/index.html.twig', [
-            'controller_name' => 'CoursController',
-        ]);
-    }
-
-    #[Route('/listcours', name: 'cours_listDB')]
-    public function listDB(ManagerRegistry $doctrine):response{
-$rep = $doctrine->getRepository(Cours::class);
-$list = $rep->findAll();
-return $this->render('cours/list_cours.html.twig',["list"=> $list]);
-    }
-
-
-    #[Route('/add_cours', name: 'cours_add')]
-    public function addExamen(ManagerRegistry $manager,Request $req):Response{
-        $cours = new Cours();
-        $em =$manager->getManager();
-     $form = $this->createForm(CoursType::class,$cours);
-     $form->handleRequest($req);
-     if($form->isSubmitted()){
-        
-        $em->persist($cours);
-        $em->flush();
-        return $this->redirectToRoute('cours_listDB');
-    } 
-        
-        return $this->render('cours/add_cours.html.twig',['f'=>$form]);
-    }    
-
-    #[Route('/delete/{id}', name: 'cours_delete')]
-
-    public function deleteExam($id,ManagerRegistry $manager ,CoursRepository $repo): Response{
-        $cours = $repo->find($id);
-        $em =$manager->getManager();
-        $em->remove($cours);
-        $em->flush();
-        return $this->redirectToRoute("cours_listDB");}
-=======
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/cours')]
- class CoursController extends AbstractController{
-    #[Route(name: 'app_cours_index', methods: ['GET'])]
+class CoursController extends AbstractController
+{
+    #[Route('/', name: 'app_cours_index', methods: ['GET'])]
     public function index(CoursRepository $coursRepository): Response
     {
         return $this->render('cours/index.html.twig', [
@@ -71,61 +23,87 @@ use Symfony\Component\Routing\Attribute\Route;
         ]);
     }
 
-    #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/list', name: 'cours_listDB', methods: ['GET'])]
+    public function listDB(ManagerRegistry $doctrine): Response
     {
-        $cour = new Cours();
-        $form = $this->createForm(CoursType::class, $cour);
-        $form->handleRequest($request);
+        $rep = $doctrine->getRepository(Cours::class);
+        $list = $rep->findAll();
+        return $this->render('cours/list_cours.html.twig', ["list" => $list]);
+    }
+
+    #[Route('/new', name: 'cours_add', methods: ['GET', 'POST'])]
+    public function addCours(ManagerRegistry $manager, Request $req): Response
+    {
+        $cours = new Cours();
+        $form = $this->createForm(CoursType::class, $cours);
+        $form->handleRequest($req);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($cour);
-            $entityManager->flush();
+            $em = $manager->getManager();
+            $em->persist($cours);
+            $em->flush();
 
-            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Cours ajouté avec succès !');
+            return $this->redirectToRoute('cours_listDB');
         }
 
-        return $this->render('cours/new.html.twig', [
-            'cour' => $cour,
-            'form' => $form,
-        ]);
+        return $this->render('cours/add_cours.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route('/{id}', name: 'app_cours_show', methods: ['GET'])]
-    public function show(Cours $cour): Response
+    public function show(Cours $cours): Response
     {
         return $this->render('cours/show.html.twig', [
-            'cour' => $cour,
+            'cours' => $cours,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_cours_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Cours $cours, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CoursType::class, $cour);
+        $form = $this->createForm(CoursType::class, $cours);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Cours modifié avec succès !');
+            return $this->redirectToRoute('app_cours_index');
         }
 
         return $this->render('cours/edit.html.twig', [
-            'cour' => $cour,
-            'form' => $form,
+            'cours' => $cours,
+            'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/{id}', name: 'app_cours_delete', methods: ['POST'])]
-    public function delete(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
+    #[Route('/delete/{id}', name: 'cours_delete', methods: ['POST'])]
+    public function delete(int $id, ManagerRegistry $manager, CoursRepository $repo): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($cour);
-            $entityManager->flush();
+        $cours = $repo->find($id);
+
+        if (!$cours) {
+            throw $this->createNotFoundException("Cours avec l'ID $id non trouvé.");
         }
 
-        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+        $em = $manager->getManager();
+        $em->remove($cours);
+        $em->flush();
+
+        $this->addFlash('success', 'Cours supprimé avec succès !');
+        return $this->redirectToRoute("cours_listDB");
     }
 
+    #[Route('/{id}/delete', name: 'app_cours_delete', methods: ['POST'])]
+    public function deleteWithToken(Request $request, Cours $cours, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $cours->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($cours);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Cours supprimé avec succès !');
+        }
+
+        return $this->redirectToRoute('app_cours_index');
+    }
 }
