@@ -1,202 +1,9 @@
+{% extends 'base_dash.html.twig' %}
 
-{% block stylesheets %}
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+{% block title %}Détails de la Classe : {{ classe.nom }}{% endblock %}
 
-        .details-container {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .details-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .details-header h2 {
-            font-size: 2.8rem;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .details-header p {
-            font-size: 1.2rem;
-            color: #555;
-        }
-
-        .details-info {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .details-info div {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
-        }
-
-        .details-info div span {
-            font-weight: bold;
-            color: #444;
-        }
-
-        .status {
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-            display: inline-block;
-        }
-
-        .status.cours {
-            background-color: #28a745; /* Vert */
-        }
-
-        .status.pause {
-            background-color: #ffc107; /* Jaune */
-        }
-
-        .status.fin {
-            background-color: #dc3545; /* Rouge */
-        }
-
-        .student-list {
-            margin-top: 20px;
-        }
-
-        .student-list h3 {
-            font-size: 1.8rem;
-            color: #333;
-            margin-bottom: 10px;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        .scroll-table {
-            margin-top: 20px;
-            overflow-x: auto;
-            max-height: 300px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table thead {
-            background: #007bff;
-            color: #fff;
-        }
-
-        table th,
-        table td {
-            text-align: left;
-            padding: 12px;
-        }
-
-        table tbody tr:nth-child(even) {
-            background: #f9f9f9;
-        }
-
-        table tbody tr:hover {
-            background: #f1f1f1;
-        }
-
-        .delete-btn {
-            background: #ff5f5f;
-            color: #fff;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .delete-btn:hover {
-            background: #ff2f2f;
-        }
-
-        .details-footer {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .details-footer .btn {
-            display: inline-block;
-            margin: 10px 10px;
-            padding: 12px 20px;
-            text-transform: uppercase;
-            font-weight: bold;
-            color: #fff;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .btn-back {
-            background-color: #17a2b8;
-        }
-
-        .btn-back:hover {
-            background-color: #138496;
-        }
-
-        .btn-add {
-            background-color: #28a745;
-        }
-
-        .btn-add:hover {
-            background-color: #218838;
-        }
-
-        .btn-info {
-            background-color: #007bff;
-            color: white;
-            padding: 8px 16px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            border-radius: 30px;
-            border: none;
-            text-align: center;
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            text-decoration: none;
-        }
-
-        /* Effet au survol */
-        .btn-info:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px); /* Déplacement vers le haut au survol */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
-        }
-
-        /* Effet lorsqu'il est cliqué */
-        .btn-info:active {
-            background-color: #004085;
-            transform: translateY(1px); /* Légère descente lors du clic */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-    </style>
-{% endblock %}
-
-{% block body %}
-<div class="details-container">
+{% block content %}
+<div class="details-container my-5">
     <div class="details-header">
         <h2>Détails de la Classe : {{ classe.nom }}</h2>
         <p>Niveau : {{ classe.niveau }} | Année : {{ classe.annee }}</p>
@@ -230,37 +37,33 @@
             <span>{{ classe.etudiants|length }}</span>
         </div>
         <div>
-    <span>État de la Classe :</span>
-    <span class="status 
-        {% if status == 'cours' %}
-            cours
-        {% elseif status == 'pause' %}
-            pause
-        {% elseif status == 'fin' %}
-            fin
-        {% elseif status == 'vide' %}
-            vide
-        {% endif %}">
-        {% if status == 'cours' %}
-            En cours
-        {% elseif status == 'pause' %}
-            En pause
-        {% elseif status == 'fin' %}
-            Fin de journée
-        {% elseif status == 'vide' %}
-            Classe vide
-        {% else %}
-            Non défini
-        {% endif %}
-    </span>
-</div>
+            <span>État de la Classe :</span>
+            <span class="status 
+                {% if status == 'cours' %}cours
+                {% elseif status == 'pause' %}pause
+                {% elseif status == 'fin' %}fin
+                {% elseif status == 'vide' %}vide
+                {% endif %}">
+                {% if status == 'cours' %}
+                    En cours
+                {% elseif status == 'pause' %}
+                    En pause
+                {% elseif status == 'fin' %}
+                    Fin de journée
+                {% elseif status == 'vide' %}
+                    Classe vide
+                {% else %}
+                    Non défini
+                {% endif %}
+            </span>
+        </div>
     </div>
 
     {% if classe.etudiants|length > 0 %}
-        <div class="student-list">
+        <div class="student-list mt-5">
             <h3>Liste des Étudiants</h3>
             <div class="scroll-table">
-                <table>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -277,10 +80,10 @@
                                 <td>{{ etudiant.prenom }}</td>
                                 <td>
                                     <a href="{{ path('etudiant_details', { id: etudiant.id }) }}" class="btn btn-info btn-sm">Détails</a>
-                        <form action="{{ path('etudiant_delete', { id: etudiant.id }) }}" method="post" style="display:inline;">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etudiant.id) }}">
-                            <button type="submit" class="delete-btn btn btn-danger btn-sm">X</button>
-                        </form>
+                                    <form action="{{ path('etudiant_delete', { id: etudiant.id }) }}" method="post" style="display:inline;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etudiant.id) }}">
+                                        <button type="submit" class="delete-btn btn btn-danger btn-sm">X</button>
+                                    </form>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -289,10 +92,10 @@
             </div>
         </div>
     {% else %}
-        <p class="text-center text-muted">Aucun étudiant inscrit dans cette classe.</p>
+        <p class="text-center text-muted mt-4">Aucun étudiant inscrit dans cette classe.</p>
     {% endif %}
 
-    <div class="details-footer">
+    <div class="details-footer mt-5">
         <a href="{{ path('classe_list') }}" class="btn btn-back">Retour à la liste des classes</a>
         <a href="{{ path('etudiant_add', { classe_id: classe.id }) }}" class="btn btn-add">Ajouter un étudiant</a>
     </div>

@@ -1,330 +1,59 @@
-{% block stylesheets %}
-    <style>
-    
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #f8f9fc, #e3e9f0);
-        color: #333;
-        margin: 0;
-        padding: 0;
-        background-image: url('https://www.esb.tn/wp-content/uploads/2022/10/ESB-2-1024x683.jpg');
-        background-size: cover; 
-        background-position: center center;
-        background-attachment: fixed; 
-    }
+{% extends 'base_dash.html.twig' %}
 
-    
-    header {
-        background-color: #2e3059;
-        color: white;
-        padding: 1.2rem 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-left: 2rem;
-        padding-right: 2rem;
-        position: fixed; 
-        top: 0; 
-        left: -20; 
-        width: 98%;
-        z-index: 1000; 
-        box-shadow: 0 4px 10px rgba(0, 0, 4, 0.4); 
-    }
+{% block title %}Gestion des Classes{% endblock %}
 
-    .logo {
-        font-size: 2rem;
-        font-weight: bold;
-    }
-
-    .logo span {
-        font-size: 120%;
-        color:white;
-    }
-    .logo span1 {
-        font-size: 120%;
-        color: #fca311;
-    }
-
-    nav {
-        display: flex;
-        gap: 2rem;
-    }
-
-    nav a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.2rem;
-        font-weight: 500; 
-        padding: 10px 20px;
-        border-radius: 25px;
-        transition: all 0.3s ease-in-out;
-        text-transform: uppercase;
-        text-align: center;
-    }
-
-
-    nav a:hover {
-        background-color: #fca311;
-        color: white;
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-     nav a:active {
-        background-color: #ff7f1f;
-        transform: translateY(1px); 
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-    
-
-
-   
-    .container {
-        margin-top: 200px;
-        margin: 50px auto;
-        max-width: 1100px;
-        background: white;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-        border-top: 5px solid #007bff;
-        background: rgba(225, 225, 225, 0.9);
-    }
-    html, body {
-    height: 100%; /* Assure que la page occupe toute la hauteur de la fenêtre */
-    margin: 0;
-}
-
-.container-page {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* La page occupe au moins toute la hauteur de la fenêtre */
-}
-
-.container {
-    flex: 1; /* Le contenu principal occupe tout l'espace restant entre le header et le footer */
-}
-
-    
-    h2 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #495057;
-        text-align: center;
-        margin-bottom: 30px;
-        text-transform: uppercase;
-    }
-
-    .table-container {
-        margin-top: 45px;
-        overflow-x: auto; 
-        overflow-y: auto; 
-        max-height: 400px; 
-    }
-
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 1rem;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
-
-    
-    .table th {
-        background: #0E3386 ;
-        color: orange;
-        padding: 15px;
-        text-transform: uppercase;
-        font-weight: 600;
-        border: none;
-    }
-
-    
-    .table td {
-        padding: 12px;
-        text-align: center;
-        border-bottom: 1px solid #dee2e6;
-    }
-
-    .table tbody tr:nth-child(even) {
-        background: #f8f9fa;
-    }
-
-    
-    .table tbody tr:hover {
-        background: #e2e6ea;
-        transform: scale(1.03);
-        transition: all 0.2s ease-in-out;
-    }
-
-    
-    .table th, .table td {
-        border-radius: 4px;
-    }
-
-    
-    .btn {
-        border-radius: 30px;
-        padding: 10px 20px;
-        font-size: 1rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        text-align: center;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        display: inline-block;
-        text-decoration: none;
-    }
-
-    .btn-info {
-        background: linear-gradient(135deg, #E4E3FF, #E4E3FF);
-        color: black;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-info:hover {
-        background: linear-gradient(135deg, #007bff, #6c63ff);
-        transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .btn-warning {
-    
-        background: linear-gradient(135deg, #E4E3FF, #E4E3FF);
-        color: black;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-warning:hover {
-        background: linear-gradient(135deg, #ffae42, #ffb700);
-        transform: translateY(-4px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.17);
-    }
-
-    .btn-danger {
-        background: linear-gradient(135deg, #ff4c4c  , #ff3232  );
-        color: black;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-danger:hover {
-        background: linear-gradient(145deg, #ff4a4a, #fa9b9b);
-        transform: translateY(-4px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.17);
-    }
-
-    /* .btn-success {
-        background: linear-gradient(135deg, #28a745, #218838);
-        color: white;
-        font-size: 1.1rem;
-        padding: 12px 24px;
-        font-weight: bold;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-success:hover {
-        background: linear-gradient(135deg, #218838, #28a745);
-        transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    } */
-
-    
-    footer {
-        background: #343a40;
-        color: white;
-        text-align: center;
-        padding: 15px 20px;
-        margin-top: 40px;
-        border-top: 5px solid #007bff;
-    }
-
-    footer p {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 300;
-    }
-
-    footer a {
-        color: #007bff;
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    footer a:hover {
-        text-decoration: underline;
-    }
-
-    </style>
-{% endblock %}
-
-{% block body %}
+{% block content %}
 <div class="container-page">
-    <header>
-        <div class="logo"><span>GESTION</span> <span1>SCOLAIRE</span1></div>
+    <div class="container">
+        <h2 class="text-center">Gestion des Classes</h2>
 
-        <nav>
-            <a href="#">ACCUEIL</a>
-            <a href="{{ path('classe_add') }}">Ajouter une nouvelle Classe</a>
-            <a href="#">RESSOURCES</a>
-        </nav>
-    </header>
-
-<div class="container">
-    <h2>Gestion des Classes</h2>
-
-    {% if list is not empty %}
-        <div class="table-container">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nom Classe</th>
-                        <th>Niveau</th>
-                        <th>Année</th>
-                        <th>Spécialité</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for classe in list %}
+        {% if list is not empty %}
+            <div class="table-container mt-4">
+                <table class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ classe.nom }}</td>
-                            <td>{{ classe.niveau }}</td>
-                            <td>{{ classe.annee }}</td>
-                            <td>
-                                {% if classe.specialite is defined %}
-                                    {{ classe.specialite.nom }}
-                                {% else %}
-                                    Non définie
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="{{ path('classe_details', {id: classe.id}) }}" class="btn btn-info btn-sm">Détails</a>
-                                <a href="{{ path('classe_update', {id: classe.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
-                                <form action="{{ path('classe_delete', {id: classe.id}) }}" method="post" style="display:inline-block;">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ classe.id) }}">
-                                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                                </form>
-                            </td>
+                            <th>#</th>
+                            <th>Nom Classe</th>
+                            <th>Niveau</th>
+                            <th>Année</th>
+                            <th>Spécialité</th>
+                            <th>Actions</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <p class="text-center text-muted">Aucune classe trouvée.</p>
-    {% endif %}
+                    </thead>
+                    <tbody>
+                        {% for classe in list %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ classe.nom }}</td>
+                                <td>{{ classe.niveau }}</td>
+                                <td>{{ classe.annee }}</td>
+                                <td>
+                                    {% if classe.specialite is defined %}
+                                        {{ classe.specialite.nom }}
+                                    {% else %}
+                                        Non définie
+                                    {% endif %}
+                                </td>
+                                <td class="d-flex justify-content-center gap-2">
+                                    <a href="{{ path('classe_details', {id: classe.id}) }}" class="btn btn-info btn-sm">Détails</a>
+                                    <a href="{{ path('classe_update', {id: classe.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                                    <form action="{{ path('classe_delete', {id: classe.id}) }}" method="post" style="display:inline-block;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ classe.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-muted mt-4">Aucune classe trouvée.</p>
+        {% endif %}
 
-    <div class="text-center mt-4">
-        {# <a href="{{ path('classe_add') }}" class="btn btn-success">Ajouter une nouvelle Classe</a> #}
+        <div class="text-center mt-4">
+            <a href="{{ path('classe_add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Ajouter une nouvelle Classe</a>
+        </div>
     </div>
 </div>
-
-<footer>
-    <p>&copy; 2024 Système de Gestion Scolaire. Tous droits réservés. <a href="#">Contactez-nous</a></p>
-</footer>
 {% endblock %}

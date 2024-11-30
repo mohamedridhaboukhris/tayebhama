@@ -1,105 +1,72 @@
-{% extends 'base.html.twig' %}
-
-{% block stylesheets %}
-<style>
-    /* Appliquer un minimum de hauteur de 100vh pour occuper tout l'espace de l'écran */
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        margin: 0;
-    }
-
-    .container {
-        flex-grow: 1; /* Cela permet au contenu principal d'occuper l'espace restant */
-        padding-top: 100px; /* Espace pour que le contenu commence sous le header fixe */
-    }
-
-    footer {
-        background: #343a40;
-        color: white;
-        text-align: center;
-        padding: 15px 20px;
-        margin-top: auto; /* Pousse le footer vers le bas de la page */
-        border-top: 5px solid #007bff;
-        position: relative; /* Fixe le footer en bas */
-        bottom: 0;
-        width: 100%;
-    }
-
-    footer p {
-        margin: 0;
-        font-size: 1rem;
-        font-weight: 300;
-    }
-
-    footer a {
-        color: #007bff;
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    footer a:hover {
-        text-decoration: underline;
-    }
-</style>
-{% endblock %}
+{% extends 'base_dash.html.twig' %}
 
 {% block title %}Modifier la Salle{% endblock %}
 
-{% block body %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Modifier la Salle</h1>
-
-    <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
-        <h5 class="text-center mb-4">Veuillez modifier les informations de la salle ci-dessous.</h5>
-
-        <!-- Formulaire -->
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col-12 mb-4">
-                <!-- Champ Code de la Salle -->
-                {{ form_label(form.code, 'Code de la Salle', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.code, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 101A'}}) }}
-            </div>
-            <div class="col-md-6 mb-4">
-                <!-- Champ Capacité -->
-                {{ form_label(form.capacite, 'Capacité', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.capacite, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 50'}}) }}
-            </div>
-            <div class="col-md-6 mb-4">
-                <!-- Champ Type -->
-                {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.type, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Salle de conférence'}}) }}
-            </div>
-            <div class="col-md-6 mb-4">
-                <!-- Champ Bloc -->
-                {{ form_label(form.bloc, 'Bloc', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.bloc, {'attr': {'class': 'form-control', 'placeholder': 'Ex: A, B, C'}}) }}
-            </div>
-            <div class="col-md-6 mb-4">
-                <!-- Champ Étage -->
-                {{ form_label(form.etage, 'Étage', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.etage, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 1, 2, 3'}}) }}
+{% block content %}
+    <div class="container my-5">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1 class="text-primary fw-bold">Modifier la Salle</h1>
+                <p class="text-muted">Veuillez modifier les informations de la salle ci-dessous.</p>
             </div>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <!-- Boutons : Enregistrer et Retour -->
-            <button type="submit" class="btn btn-success">
-                <i class="fas fa-save"></i> Enregistrer les modifications
-            </button>
-            <a href="{{ path('salle_all') }}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Retour à la liste
-            </a>
-        </div>
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Informations de la Salle</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <!-- Champ Code de la Salle -->
+                                {{ form_label(form.code, 'Code de la Salle', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.code, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 101A'}}) }}
+                                {{ form_errors(form.code) }}
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Champ Capacité -->
+                                {{ form_label(form.capacite, 'Capacité', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.capacite, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 50'}}) }}
+                                {{ form_errors(form.capacite) }}
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Champ Type -->
+                                {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.type, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Salle de conférence'}}) }}
+                                {{ form_errors(form.type) }}
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Champ Bloc -->
+                                {{ form_label(form.bloc, 'Bloc', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.bloc, {'attr': {'class': 'form-control', 'placeholder': 'Ex: A, B, C'}}) }}
+                                {{ form_errors(form.bloc) }}
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Champ Étage -->
+                                {{ form_label(form.etage, 'Étage', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.etage, {'attr': {'class': 'form-control', 'placeholder': 'Ex: 1, 2, 3'}}) }}
+                                {{ form_errors(form.etage) }}
+                            </div>
+                        </div>
 
-        {{ form_end(form) }}
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="fas fa-save"></i> Enregistrer
+                            </button>
+                            <a href="{{ path('salle_all') }}" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-arrow-left"></i> Retour
+                            </a>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-<footer>
-    <p>&copy; 2024 Système de Gestion Scolaire. Tous droits réservés. <a href="#">Contactez-nous</a></p>
-</footer>
-
 {% endblock %}

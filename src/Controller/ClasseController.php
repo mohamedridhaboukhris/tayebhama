@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-<<<<<<< HEAD
 use App\Entity\Classe;
 use App\Entity\Etudiant;
 use App\Form\ClasseType;
@@ -44,19 +43,19 @@ class ClasseController extends AbstractController
     #[Route('/class/add', name: 'classe_add')]
     public function classeAdd(Request $request, ManagerRegistry $manager): Response
     {
-        $classe = new Classe(); 
+        $classe = new Classe();
         $form = $this->createForm(ClasseType::class, $classe);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $manager->getManager();
             $em->persist($classe);
             $em->flush();
-    
+
             $this->addFlash('success', 'La classe a été ajoutée avec succès !');
             return $this->redirectToRoute('classe_list');
         }
-    
+
         return $this->render('classe/addclass.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -66,17 +65,18 @@ class ClasseController extends AbstractController
     public function classeUpdate(Request $request, ManagerRegistry $manager, Classe $classe): Response
     {
         $em = $manager->getManager();
-        
+
         $form = $this->createForm(ClasseType::class, $classe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($classe);
             $em->flush();
+            $this->addFlash('success', 'Classe mise à jour avec succès !');
             return $this->redirectToRoute('classe_list');
         }
 
-        return $this->render('classe/addclass.html.twig', ['form' => $form]);
+        return $this->render('classe/addclass.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route('/etudiant/add/{classe_id}', name: 'etudiant_add')]
@@ -99,6 +99,7 @@ class ClasseController extends AbstractController
             $em->persist($etudiant);
             $em->flush();
 
+            $this->addFlash('success', 'Étudiant ajouté avec succès !');
             return $this->redirectToRoute('classe_details', ['id' => $classe->getId()]);
         }
 
@@ -122,55 +123,41 @@ class ClasseController extends AbstractController
         $em->remove($etudiant);
         $em->flush();
 
+        $this->addFlash('success', 'Étudiant supprimé avec succès !');
         return $this->redirectToRoute('classe_details', ['id' => $classeId]);
     }
 
     #[Route('/classe/details/{id}', name: 'classe_details')]
-public function classeDetail(Classe $classe): Response
-{
-    // Vérifiez si la classe est vide
-    if ($classe->getEtudiants()->isEmpty()) {
-        $status = 'vide'; // État si la classe n'a pas d'étudiants
-    } else {
-        // Sinon, calculez l'état en fonction de l'heure
-        $currentHour = (int)(new \DateTime())->format('H');
-        $currentMinute = (int)(new \DateTime())->format('i');
+    public function classeDetail(Classe $classe): Response
+    {
+        $status = $classe->getEtudiants()->isEmpty() ? 'vide' : 'indéfini';
 
-        if (($currentHour >= 8 && $currentHour < 12) || ($currentHour == 12 && $currentMinute == 0)) {
-            $status = 'cours';
-        } elseif (($currentHour == 12 && $currentMinute > 0) || ($currentHour == 13 && $currentMinute <= 30)) {
-            $status = 'pause';
-        } elseif ($currentHour >= 13 && $currentHour < 17) {
-            $status = 'cours';
-        } else {
-            $status = 'fin';
+        if (!$classe->getEtudiants()->isEmpty()) {
+            $currentHour = (int)(new \DateTime())->format('H');
+            $currentMinute = (int)(new \DateTime())->format('i');
+
+            if (($currentHour >= 8 && $currentHour < 12) || ($currentHour == 12 && $currentMinute == 0)) {
+                $status = 'cours';
+            } elseif (($currentHour == 12 && $currentMinute > 0) || ($currentHour == 13 && $currentMinute <= 30)) {
+                $status = 'pause';
+            } elseif ($currentHour >= 13 && $currentHour < 17) {
+                $status = 'cours';
+            } else {
+                $status = 'fin';
+            }
         }
-    }
 
-    return $this->render('classe/details.html.twig', [
-        'classe' => $classe,
-        'status' => $status,
-    ]);
-}
+        return $this->render('classe/details.html.twig', [
+            'classe' => $classe,
+            'status' => $status,
+        ]);
+    }
 
     #[Route('/etudiant/details/{id}', name: 'etudiant_details')]
     public function details(Etudiant $etudiant): Response
     {
         return $this->render('classe/details.html.twig', [
             'etudiant' => $etudiant,
-=======
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-
-class ClasseController extends AbstractController
-{
-    #[Route('/classe', name: 'app_classe')]
-    public function index(): Response
-    {
-        return $this->render('classe/index.html.twig', [
-            'controller_name' => 'ClasseController',
->>>>>>> origin/travailtayeb
         ]);
     }
 }

@@ -1,22 +1,37 @@
+{% extends 'base_dash.html.twig' %}
+
 {% block title %}{{ title | default('Formulaire') }}{% endblock %}
 
-{% block body %}
-<div class="container mt-5">
-    <h1 class="mb-4 text-center">{{ title | default('Formulaire') }}</h1>
-    
-    <div class="card p-4 shadow-sm">
-        {% if message is defined and message %}
-            <div class="alert alert-info text-center">{{ message }}</div>
-        {% endif %}
-        
-        <!-- Contenu du formulaire -->
-        {% block form_content %}{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="text-primary fw-bold">{{ title | default('Formulaire') }}</h1>
+            <p class="text-muted">Veuillez remplir les informations ci-dessous.</p>
+        </div>
     </div>
 
-    <div class="mt-4 text-center">
-        <a href="{{ path('salle_all') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Retour à la liste
-        </a>
+    <!-- Form Card -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if message is defined and message %}
+                        <div class="alert alert-info text-center">{{ message }}</div>
+                    {% endif %}
+
+                    <!-- Contenu du formulaire -->
+                    {% block form_content %}{% endblock %}
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('salle_all') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
