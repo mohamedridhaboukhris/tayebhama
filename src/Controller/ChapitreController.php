@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/chapitre')]
-class ChapitreController extends AbstractController{
+ class ChapitreController extends AbstractController{
     #[Route(name: 'app_chapitre_index', methods: ['GET'])]
     public function index(ChapitreRepository $chapitreRepository): Response
     {

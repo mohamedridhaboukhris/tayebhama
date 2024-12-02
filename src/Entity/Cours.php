@@ -24,13 +24,11 @@ class Cours
     #[ORM\Column(length: 255)]
     private ?string $classConcernee = null;
 
-    #[ORM\Column(type: "datetime", nullable: true)]
-    private ?\DateTimeInterface $dateCreation = null;
-    #[ORM\Column(type: "time", nullable: true)]
-    private ?\DateTimeInterface $horaires = null;
-    
     #[ORM\Column(type: "text", nullable: true)]
     private ?string $description = null;
+
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private ?\DateTimeInterface $dateCreation = null;
 
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Chapitre::class, cascade: ['persist', 'remove'])]
     private Collection $chapitres;
@@ -55,18 +53,7 @@ class Cours
         $this->nomCours = $nomCours;
         return $this;
     }
-    public function getHoraires(): ?\DateTimeInterface
-    {
-        return $this->horaires;
-    }
-    
-    public function setHoraires(?\DateTimeInterface $horaires): static
-    {
-        $this->horaires = $horaires;
-    
-        return $this;
-    }
-    
+
     public function getEnseignantResponsable(): ?string
     {
         return $this->enseignantResponsable;
@@ -89,17 +76,6 @@ class Cours
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
-    {
-        return $this->dateCreation;
-    }
-
-    public function setDateCreation(?\DateTimeInterface $dateCreation): static
-    {
-        $this->dateCreation = $dateCreation;
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -108,6 +84,17 @@ class Cours
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+        return $this;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(?\DateTimeInterface $dateCreation): static
+    {
+        $this->dateCreation = $dateCreation;
         return $this;
     }
 
@@ -131,6 +118,7 @@ class Cours
     public function removeChapitre(Chapitre $chapitre): static
     {
         if ($this->chapitres->removeElement($chapitre)) {
+            // set the owning side to null (unless already changed)
             if ($chapitre->getCours() === $this) {
                 $chapitre->setCours(null);
             }

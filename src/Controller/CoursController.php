@@ -6,16 +6,15 @@ use App\Entity\Cours;
 use App\Form\CoursType;
 use App\Repository\CoursRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/cours')]
 class CoursController extends AbstractController
 {
-    #[Route('/', name: 'app_cours_index', methods: ['GET'])]
+    #[Route(name: 'app_cours_index', methods: ['GET'])]
     public function index(CoursRepository $coursRepository): Response
     {
         return $this->render('cours/index.html.twig', [
@@ -23,87 +22,92 @@ class CoursController extends AbstractController
         ]);
     }
 
-    #[Route('/list', name: 'cours_listDB', methods: ['GET'])]
-    public function listDB(ManagerRegistry $doctrine): Response
+    #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $rep = $doctrine->getRepository(Cours::class);
-        $list = $rep->findAll();
-        return $this->render('cours/list_cours.html.twig', ["list" => $list]);
-    }
+        $cour = new Cours();
+        $form = $this->createForm(CoursType::class, $cour);
+        $form->handleRequest($request);
 
-    #[Route('/new', name: 'cours_add', methods: ['GET', 'POST'])]
-    public function addCours(ManagerRegistry $manager, Request $req): Response
-    {
-        $cours = new Cours();
-        $form = $this->createForm(CoursType::class, $cours);
-        $form->handleRequest($req);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $manager->getManager();
-            $em->persist($cours);
-            $em->flush();
-
-            $this->addFlash('success', 'Cours ajouté avec succès !');
-            return $this->redirectToRoute('cours_listDB');
+        // Validation de la date de création
+        $dateCreation = $cour->getDateCreation();
+        if ($dateCreation) {
+            // Vérification que la date est en dehors de la plage horaire 07:00 à 18:00
+            $startHour = new \DateTime('07:00');
+            $endHour = new \DateTime('18:00');
+            if ($dateCreation >= $startHour && $dateCreation <= $endHour) {
+                $this->addFlash('error', 'La date et l\'heure doivent être en dehors de la plage horaire de 07:00 à 18:00.');
+                return $this->render('cours/new.html.twig', [
+                    'cour' => $cour,
+                    'form' => $form,
+                ]);
+            }
         }
 
-        return $this->render('cours/add_cours.html.twig', ['form' => $form->createView()]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($cour);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('cours/new.html.twig', [
+            'cour' => $cour,
+            'form' => $form,
+        ]);
     }
 
     #[Route('/{id}', name: 'app_cours_show', methods: ['GET'])]
-    public function show(Cours $cours): Response
+    public function show(Cours $cour): Response
     {
         return $this->render('cours/show.html.twig', [
-            'cours' => $cours,
+            'cour' => $cour,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_cours_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cours $cours, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CoursType::class, $cours);
+        $form = $this->createForm(CoursType::class, $cour);
         $form->handleRequest($request);
+
+        // Validation de la date de création
+        $dateCreation = $cour->getDateCreation();
+        if ($dateCreation) {
+            // Vérification que la date est en dehors de la plage horaire 07:00 à 18:00
+            $startHour = new \DateTime('07:00');
+            $endHour = new \DateTime('18:00');
+            if ($dateCreation >= $startHour && $dateCreation <= $endHour) {
+                $this->addFlash('error', 'La date et l\'heure doivent être en dehors de la plage horaire de 07:00 à 18:00.');
+                return $this->render('cours/edit.html.twig', [
+                    'cour' => $cour,
+                    'form' => $form,
+                ]);
+            }
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Cours modifié avec succès !');
-            return $this->redirectToRoute('app_cours_index');
+            return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('cours/edit.html.twig', [
-            'cours' => $cours,
-            'form' => $form->createView(),
+            'cour' => $cour,
+            'form' => $form,
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'cours_delete', methods: ['POST'])]
-    public function delete(int $id, ManagerRegistry $manager, CoursRepository $repo): Response
+    #[Route('/{id}', name: 'app_cours_delete', methods: ['POST'])]
+    public function delete(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
     {
-        $cours = $repo->find($id);
-
-        if (!$cours) {
-            throw $this->createNotFoundException("Cours avec l'ID $id non trouvé.");
-        }
-
-        $em = $manager->getManager();
-        $em->remove($cours);
-        $em->flush();
-
-        $this->addFlash('success', 'Cours supprimé avec succès !');
-        return $this->redirectToRoute("cours_listDB");
-    }
-
-    #[Route('/{id}/delete', name: 'app_cours_delete', methods: ['POST'])]
-    public function deleteWithToken(Request $request, Cours $cours, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $cours->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($cours);
+        if ($this->isCsrfTokenValid('delete'.$cour->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($cour);
             $entityManager->flush();
-
-            $this->addFlash('success', 'Cours supprimé avec succès !');
         }
 
-        return $this->redirectToRoute('app_cours_index');
+        return $this->redirectToRoute('app_cours_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

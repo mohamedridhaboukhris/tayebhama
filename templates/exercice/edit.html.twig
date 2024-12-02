@@ -1,0 +1,41 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Modifier l'Exercice{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Modifier l'Exercice</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- Formulaire d'édition -->
+                <form method="post">
+                    {{ form_start(form) }}
+
+                    <div class="mb-3">
+                        {{ form_label(form.name, 'Nom de l\'Exercice', {'label_attr': {'class': 'fw-bold'}}) }}
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom de l\'exercice'}}) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.content, 'Description', {'label_attr': {'class': 'fw-bold'}}) }}
+                        {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Description de l\'exercice'}}) }}
+                        {{ form_errors(form.content) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-pencil"></i> Modifier
+                        </button>
+                        <a href="{{ path('app_exercice_index') }}" class="btn btn-secondary ms-2">
+                            <i class="bi bi-arrow-left"></i> Retour à la liste
+                        </a>
+                    </div>
+
+                    {{ form_end(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

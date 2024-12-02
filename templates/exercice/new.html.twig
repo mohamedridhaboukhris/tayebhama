@@ -1,0 +1,48 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Ajouter un Exercice{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Ajouter un Exercice</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- Formulaire d'ajout -->
+                <form method="post" enctype="multipart/form-data"> <!-- Add enctype for file upload -->
+                    {{ form_start(form) }}
+
+                    <div class="mb-3">
+                        {{ form_label(form.name) }}
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.content) }}
+                        {{ form_widget(form.content) }}
+                        {{ form_errors(form.content) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <!-- Image upload field -->
+                        {{ form_label(form.image_exercice) }}
+                        {{ form_widget(form.image_exercice) }}
+                        {{ form_errors(form.image_exercice) }}
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Enregistrer
+                        </button>
+                        <a href="{{ path('app_exercice_index') }}" class="btn btn-secondary ms-2">
+                            <i class="bi bi-arrow-left"></i> Retour à la liste
+                        </a>
+                    </div>
+
+                    {{ form_end(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

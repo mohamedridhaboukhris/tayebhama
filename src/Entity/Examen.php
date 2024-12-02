@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\ExamenRepository;
@@ -30,26 +29,36 @@ class Examen
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\OneToOne(targetEntity: Professor::class, inversedBy: 'exam', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Professor::class, inversedBy: 'exam', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Professor $professeurDeGarde = null;
-    public function getProfesseurDeGarde(): ?Professor
-    {
-        return $this->professeurDeGarde;
-    }
-
-    public function setProfesseurDeGarde(Professor $professeurDeGarde): self
-    {
-        $this->professeurDeGarde = $professeurDeGarde;
-        return $this;
-    }
 
     #[ORM\ManyToMany(targetEntity: Classe::class)]
     private Collection $classes;
 
+    #[ORM\ManyToMany(targetEntity: Exercice::class, inversedBy: 'examens')]
+    #[ORM\JoinTable(name: 'examen_exercice')]
+    private Collection $exercices;
+
     public function __construct()
     {
         $this->classes = new ArrayCollection();
+        $this->exercices = new ArrayCollection();
+    }
+
+    // Getters and Setters (no changes needed here for this part)
+
+    public function getExercices(): Collection
+    {
+        return $this->exercices;
+    }
+
+    public function addExercice(Exercice $exercice): self
+    {
+        if (!$this->exercices->contains($exercice)) {
+            $this->exercices[] = $exercice;
+        }
+        return $this;
     }
 
     public function getId(): ?int
@@ -57,15 +66,19 @@ class Examen
         return $this->id;
     }
 
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): void
     {
         $this->name = $name;
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -73,10 +86,9 @@ class Examen
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(?\DateTimeInterface $date): void
     {
         $this->date = $date;
-        return $this;
     }
 
     public function getDuration(): ?int
@@ -84,10 +96,9 @@ class Examen
         return $this->duration;
     }
 
-    public function setDuration(int $duration): self
+    public function setDuration(?int $duration): void
     {
         $this->duration = $duration;
-        return $this;
     }
 
     public function getLocation(): ?string
@@ -95,10 +106,9 @@ class Examen
         return $this->location;
     }
 
-    public function setLocation(string $location): self
+    public function setLocation(?string $location): void
     {
         $this->location = $location;
-        return $this;
     }
 
     public function getType(): ?string
@@ -106,31 +116,34 @@ class Examen
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(?string $type): void
     {
         $this->type = $type;
-        return $this;
     }
 
+    public function getProfesseurDeGarde(): ?Professor
+    {
+        return $this->professeurDeGarde;
+    }
 
-
+    public function setProfesseurDeGarde(?Professor $professeurDeGarde): void
+    {
+        $this->professeurDeGarde = $professeurDeGarde;
+    }
 
     public function getClasses(): Collection
     {
         return $this->classes;
     }
 
-    public function addClass(Classe $classe): self
+    public function setClasses(Collection $classes): void
     {
-        if (!$this->classes->contains($classe)) {
-            $this->classes[] = $classe;
-        }
-        return $this;
+        $this->classes = $classes;
     }
 
-    public function removeClass(Classe $classe): self
+    public function removeExercice(Exercice $exercice): self
     {
-        $this->classes->removeElement($classe);
+        $this->exercices->removeElement($exercice);
         return $this;
     }
 }
