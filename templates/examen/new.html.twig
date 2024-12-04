@@ -53,6 +53,10 @@
                                 {{ form_widget(form.classes, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}
                                 {{ form_errors(form.classes) }}
                             </div>
+                            <div class="col-md-12">
+                                {{ form_label(form.exercices, 'exercice', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.exercices, {'attr': {'class': 'form-select', 'multiple': 'multiple'}}) }}
+                                {{ form_errors(form.exercices) }}
                         </div>
                         <div class="mt-4 d-flex justify-content-between">
                             <a href="{{ path('app_examen_index') }}" class="btn btn-outline-secondary">Cancel</a>

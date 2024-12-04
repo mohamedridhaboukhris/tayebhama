@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Classe;
 use App\Entity\Examen;
+use App\Entity\Exercice;
 use App\Entity\Professor;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -107,7 +108,7 @@ class ExamenType extends AbstractType
 
             ->add('classes', EntityType::class, [
                 'class' => Classe::class,
-                'choice_label' => 'name',
+                'choice_label' => 'nom',
                 'multiple' => true,
                 'expanded' => false,
                 'label' => 'Classes Concerned',
@@ -118,13 +119,28 @@ class ExamenType extends AbstractType
                     ]),
                 ],
                 'attr' => ['class' => 'form-control'],
+            ])
+            ->add('exercices', EntityType::class, [
+                'class' => Exercice::class, // The entity you want to select from
+                'choice_label' => 'name', // This should be the property of Exercice you want to display in the dropdown
+                'multiple' => true, // Allows the user to select multiple exercices
+                'expanded' => false, // Use checkboxes if you want to allow multiple selections
+                'label' => 'Exercices Associated with the Exam', // The label displayed in the form
+                'constraints' => [
+                    new Assert\Count([
+                        'min' => 1,
+                        'minMessage' => 'You must select at least one exercise.',
+                    ]),
+                ],
+                'placeholder' => 'Select exercices', // Placeholder text
+                'attr' => ['class' => 'form-control'],
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Examen::class,
+            'data_class' => Examen::class, // The data class for the form
         ]);
     }
 }

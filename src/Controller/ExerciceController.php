@@ -46,8 +46,7 @@ final class ExerciceController extends AbstractController{
             // Get the uploaded image
             $image_exercice = $form['image_exercice']->getData();
 
-            // If an image was uploaded, move it to the specified directory
-            if ($image_exercice) {
+            if ($image_exercice instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
                 $newFilename = uniqid() . '.' . $image_exercice->guessExtension(); // Generate a unique filename
                 $image_exercice->move($photoDir, $newFilename); // Move the file to the upload directory
 
@@ -81,20 +80,47 @@ final class ExerciceController extends AbstractController{
     }
 
     #[Route('/{id}/edit', name: 'app_exercice_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Exercice $exercice, EntityManagerInterface $entityManager): Response
-    {
+    public function edit(
+        Request $request,
+        Exercice $exercice,
+        EntityManagerInterface $entityManager,
+        #[Autowire('photo_dir')] string $photoDir
+    ): Response {
         $form = $this->createForm(ExerciceType::class, $exercice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Get the uploaded image
+            $image_exercice = $form['image_exercice']->getData();
+
+            // If a new image is uploaded
+            if ($image_exercice) {
+                // Remove the old image if it exists (optional but recommended to avoid orphaned files)
+                $oldImagePath = $photoDir . '/' . $exercice->getImageExercice();
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath); // Delete the old image
+                }
+
+                // Generate a new unique filename for the image
+                $newFilename = uniqid() . '.' . $image_exercice->guessExtension();
+                // Move the uploaded image to the upload directory
+                $image_exercice->move($photoDir, $newFilename);
+
+                // Update the image filename in the entity
+                $exercice->setImageExercice($newFilename);
+            }
+
+            // Persist the updated Exercice entity
             $entityManager->flush();
 
+            // Redirect to the exercices index page after editing
             return $this->redirectToRoute('app_exercice_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // Render the form for editing the Exercice
         return $this->render('exercice/edit.html.twig', [
             'exercice' => $exercice,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

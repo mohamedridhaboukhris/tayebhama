@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- Formulaire d'édition -->
-                <form method="post">
+                <form method="post" enctype="multipart/form-data"> <!-- Add enctype for file upload -->
                     {{ form_start(form) }}
 
                     <div class="mb-3">
@@ -23,6 +23,14 @@
                         {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Description de l\'exercice'}}) }}
                         {{ form_errors(form.content) }}
                     </div>
+
+                    <!-- Image upload field -->
+                    <div class="mb-3">
+                        {{ form_label(form.image_exercice, 'Image de l\'Exercice', {'label_attr': {'class': 'fw-bold'}}) }}
+                        {{ form_widget(form.image_exercice, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.image_exercice) }}
+                    </div>
+
 
                     <div class="mb-3">
                         <button type="submit" class="btn btn-warning">
