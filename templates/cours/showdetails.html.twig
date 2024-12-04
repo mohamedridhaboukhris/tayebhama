@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="section course-details" data-section="section2">
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-12 text-center mb-5">
+                    <div class="section-heading">
+                        <h2 class="text-primary fw-bold">Course Details</h2>
+                        <p class="text-muted">All information about this course.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Details -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">{{ cours.nomCours }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th class="w-50">Date Created</th>
+                                    <td>{{ cours.dateCreation|date('d M Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Instructor</th>
+                                    <td>{{ cours.enseignantResponsable }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Class</th>
+                                    <td>{{ cours.classConcernee }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <td>{{ cours.description }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chapters List -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">Chapters</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if chapitres is not empty %}
+                                <ul class="list-group">
+                                    {% for chapitre in chapitres %}
+                                        <li class="list-group-item">
+                                            <h6>{{ chapitre.titre }}</h6>
+                                            <p class="mb-0"><strong>Order:</strong> {{ chapitre.ordre }}</p>
+                                            <p class="mb-0"><strong>Content:</strong> {{ chapitre.contenu|length > 50 ? chapitre.contenu|slice(0, 50) ~ '...' : chapitre.contenu }}</p>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>No chapters available for this course.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to List Button -->
+            <div class="row mt-4">
+                <div class="col-md-12 text-center">
+                    <a href="{{ path('app_cours_user') }}" class="btn btn-outline-primary">
+                        <i class="fa fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

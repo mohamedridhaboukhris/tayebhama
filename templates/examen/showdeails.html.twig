@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="section exam-details" data-section="section2">
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-12 text-center mb-5">
+                    <div class="section-heading">
+                        <h2 class="text-primary fw-bold">Exam Details</h2>
+                        <p class="text-muted">All information about this exam.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exam Details -->
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">{{ examen.name }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th class="w-50">Date</th>
+                                    <td>{{ examen.date|date('d M Y, H:i') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Duration</th>
+                                    <td>{{ examen.duration }} minutes</td>
+                                </tr>
+                                <tr>
+                                    <th>Location</th>
+                                    <td>{{ examen.location }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Professor on Duty</th>
+                                    <td>{{ examen.professeurDeGarde.name }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercises List -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">Exercises</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if exercices is not empty %}
+                                <ul class="list-group">
+                                    {% for exercice in exercices %}
+                                        <li class="list-group-item">
+                                            <h6>{{ exercice.name }}</h6>
+                                            <img src="{{ asset('photo_dir/' ~ exercice.imageExercice) }}" class="img-fluid" alt="{{ exercice.name }}">
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>No exercises available for this exam.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back to List Button -->
+            <div class="row mt-4">
+                <div class="col-md-12 text-center">
+                    <a href="{{ path('app_examen_user') }}" class="btn btn-outline-primary">
+                        <i class="fa fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
