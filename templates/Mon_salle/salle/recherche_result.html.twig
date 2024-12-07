@@ -1,0 +1,37 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Résultats de Recherche{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0" style="background: url('{{ asset('assets/images/background-salles.jpg') }}') no-repeat center center; background-size: cover; min-height: 100vh;">
+    <div class="container py-5">
+        <h1 class="text-primary fw-bold text-center mb-5">Résultats pour "{{ searchTerm }}"</h1>
+
+        {% if salles %}
+            <!-- Détails de la Salle -->
+            <div class="card shadow-sm mx-auto mb-4" style="max-width: 800px; background: rgba(255, 255, 255, 0.9);">
+                <div class="card-header bg-primary text-white">
+                    <h4>Détails de la Salle</h4>
+                </div>
+                {%for salle in salles %}
+<div class="card-body">
+                    <p><strong>Code :</strong> {{ salle.code }}</p>
+                    <p><strong>Capacité :</strong> {{ salle.capacite }}</p>
+                    <p><strong>Type :</strong> {{ salle.type }}</p>
+                    <p><strong>Bloc :</strong> {{ salle.bloc }}</p>
+                    <p><strong>Étage :</strong> {{ salle.etage }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Événements Associés -->
+            
+        {% else %}
+            <!-- Message d'Alerte -->
+            <div class="alert alert-danger text-center mt-4">
+                Aucune salle trouvée avec le terme "{{ searchTerm }}".
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

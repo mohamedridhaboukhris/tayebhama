@@ -96,15 +96,7 @@
                         <a href="{{ path('app_examen_index') }}" class="btn btn-outline-secondary">
                             <i class="fa fa-arrow-left"></i> Back to List
                         </a>
-                        <div>
-                            <a href="{{ path('app_examen_edit', {'id': examan.id}) }}" class="btn btn-danger me-2">
-                                <i class="fa fa-edit"></i> Edit
-                            </a>
-                            <form method="post" action="{{ path('app_examen_delete', {'id': examan.id}) }}">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ examan.id) }}">
-                                <button class="btn btn-warning btn-sm">Delete</button>
-                            </form>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

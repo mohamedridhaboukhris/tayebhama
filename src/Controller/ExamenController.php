@@ -12,12 +12,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/examen')]
- class ExamenController extends AbstractController{
+class ExamenController extends AbstractController{
     #[Route(name: 'app_examen_index', methods: ['GET'])]
     public function index(ExamenRepository $examenRepository): Response
     {
+        $today = new \DateTime(); // Get current date and time
+
         return $this->render('examen/index.html.twig', [
             'examens' => $examenRepository->findAll(),
+            'today' => $today,
+
         ]);
     }
 

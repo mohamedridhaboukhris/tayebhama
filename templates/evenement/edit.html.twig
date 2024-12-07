@@ -1,0 +1,22 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Modifier l'Événement{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-primary fw-bold text-center mb-4">Modifier l'Événement</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-warning">Modifier</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

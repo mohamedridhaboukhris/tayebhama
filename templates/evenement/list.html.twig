@@ -1,0 +1,58 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Liste des Événements{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0" style="background: url('{{ asset('assets/images/background-salles.jpg') }}') no-repeat center center; background-size: cover; min-height: 100vh;">
+        <div class="container py-5">
+        <!-- Titre principal centré -->
+        <div class="d-flex justify-content-center align-items-center mb-4">
+            <h1 class="text-white fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); font-size: 2rem;">Liste des Événements</h1>
+        </div>
+
+        <!-- Bouton Ajouter un événement en haut à droite -->
+        <div class="d-flex justify-content-end mb-4">
+            <a href="{{ path('evenement_new', {'id': 0}) }}" class="btn btn-success shadow-sm" style="border-radius: 5px; font-size: 1rem; padding: 10px 20px;">
+                <i class="fa fa-plus"></i> Ajouter un événement
+            </a>
+        </div>
+
+        <!-- Vérification des événements -->
+        {% if evenements is not empty %}
+            <div class="row">
+                {% for evenement in evenements %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-lg" style="border-radius: 10px; background: rgba(255, 255, 255, 0.95);">
+                            <div class="card-header bg-primary text-white text-center" style="border-radius: 10px 10px 0 0;">
+                                <h5 class="mb-0">{{ evenement.titre }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Description :</strong> {{ evenement.description }}</p>
+                                <p><strong>Date :</strong> {{ evenement.date|date('d/m/Y') }}</p>
+                                <p><strong>Heure :</strong> {{ evenement.heureDebut|date('H:i') }} - {{ evenement.heureFin|date('H:i') }}</p>
+                                <p><strong>Salle :</strong> {{ evenement.salle ? evenement.salle.code : 'Aucune salle' }}</p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <a href="{{ path('evenement_edit', {'id': evenement.id}) }}" class="btn btn-warning btn-sm">
+                                    <i class="fa fa-edit"></i> Modifier
+                                </a>
+                                <form method="post" action="{{ path('evenement_delete', {'id': evenement.id}) }}" style="display: inline;" onsubmit="return confirm('Confirmer la suppression ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id) }}">
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash"></i> Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Message en cas d'absence d'événements -->
+            <div class="alert alert-info text-center mt-4">
+                Aucun événement n'est disponible.
+            </div>
+        {% endif %}
+
+     
+{% endblock %}

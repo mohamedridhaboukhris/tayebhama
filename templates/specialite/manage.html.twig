@@ -1,0 +1,23 @@
+{% extends 'base_dash.html.twig' %}
+
+{% block title %}Gérer les Spécialités{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2>Ajouter une Spécialité</h2>
+        </div>
+        <div class="card-body">
+            {{ form_start(specialiteForm) }}
+                <div class="mb-3">
+                    {{ form_label(specialiteForm.nom, 'Nom de la Spécialité', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(specialiteForm.nom, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Informatique'}}) }}
+                    {{ form_errors(specialiteForm.nom) }}
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            {{ form_end(specialiteForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

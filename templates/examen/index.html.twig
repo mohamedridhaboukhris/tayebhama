@@ -66,13 +66,23 @@
                                             <a href="{{ path('app_examen_show', {'id': examan.id}) }}" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-eye"></i> View
                                             </a>
-                                            <a href="{{ path('app_examen_edit', {'id': examan.id}) }}" class="btn btn-warning btn-sm">
-                                                <i class="fa fa-edit"></i> Edit
-                                            </a>
-                                            <a href="{{ path('app_examen_delete', {'id': examan.id}) }}" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-edit"></i> delete
-                                            </a>
 
+                                            {# Check if the exam date has passed #}
+                                            {% if examan.date > today %}
+                                                <a href="{{ path('app_examen_edit', {'id': examan.id}) }}" class="btn btn-warning btn-sm">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a href="{{ path('app_examen_delete', {'id': examan.id}) }}" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            {% else %}
+                                                <button class="btn btn-warning btn-sm" disabled>
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </button>
+                                                <button class="btn btn-danger btn-sm" disabled>
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% else %}
